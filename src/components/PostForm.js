@@ -1,24 +1,31 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { createPost } from '../redux/actions'
 
-export default class PostForm extends React.Component {
+class PostForm extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       title: ''
     }
+    // эта функция будет вызывать dispatch
   }
 
   onSubmitHandler = event => {
     // чтобы не менялась страница при сабмите
     event.preventDefault()
-    console.log(this.state)
+
     const { title } = this.state
+    if (!title.trim()) {
+      return
+    }
     //новый объект для поста
     const newPost = {
       title,
       id: Date.now().toString()
     }
-    console.log(newPost)
+
+    this.props.createPost(newPost)
     this.setState({ title: '' })
   }
   //создадим универальную функцию-обработчик инпутов. Она передает
@@ -52,3 +59,12 @@ export default class PostForm extends React.Component {
     )
   }
 }
+
+//создадим функцию, которая будет мапить диспатчи
+const mapDispatchToProps = {
+  createPost
+  //можно написать так:
+  // createPost: cretePost
+}
+
+export default connect(null, mapDispatchToProps)(PostForm)

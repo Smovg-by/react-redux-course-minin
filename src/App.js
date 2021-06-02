@@ -12,7 +12,8 @@ function App () {
       <div className='row'>
         <div className='col'>
           <h2>Синхронные посты</h2>
-          <Posts posts={[]} />
+          {/* Не передаем пропсы в Posts, тк. в компоненте используем mapStateToProps */}
+          <Posts />
         </div>
         <div className='col'>
           <h2>Асинхронные посты</h2>
